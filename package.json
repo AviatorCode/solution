@@ -4,7 +4,13 @@
   "description": "Cluckr, simple twitter clone with Express",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+        "db:create": "createdb --echo knex_cluckr",
+        "db:drop": "dropdb --if-exists --echo knex_cluckr",
+        "db:migrate": "knex migrate:latest",
+        "db:rollback": "knex migrate:rollback",
+        "db:reset": "npm run db:drop && npm run db:create && npm run db:migrate"
   },
   "keywords": [
     "express",
@@ -14,5 +20,17 @@
     "node"
   ],
   "author": "Arivin Nair",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
 }
