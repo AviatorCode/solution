@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
         .insert({
             title: formData.title,
             content: formData.content,
-            imageUrl: formData.image_url,
+            imageurl: formData.image_url,
         })
         .returning('*')
         .then(clucks => {
