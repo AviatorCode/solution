@@ -61,7 +61,7 @@ router.get('/hello_world', (request, response) => {
 // This will send/render an ejs template to the client
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7; // A week in millisenconds
 router.get('/', (request, response) => {
-    response.cookie('myCookie', 'cookie value here', {
+    response.cookie('arivinCookie', 'username', {
         maxAge: COOKIE_MAX_AGE,
     });
     // `reponse.render(<ejs-file-path-within-views-directory>)`
@@ -74,28 +74,28 @@ router.get('/', (request, response) => {
     response.render('clucks');
 });
 
-router.get('/contact_us', (request, response) => {
-    response.render('contactUs');
-});
+// router.get('/contact_us', (request, response) => {
+//     response.render('contactUs');
+// });
 
-router.get('/thank_you', (request, response) => {
-    const params = request.query;
-    //   console.log('params', params);
-    // The object properties of params are named based on the "name" attributes
-    // for the inputs of the form.
-    const fullName = params.fullName;
-    const favoriteColor = params.favoriteColor;
-    const favoriteDay = params.favoriteDay;
-    const message = params.message;
+// router.get('/thank_you', (request, response) => {
+//     const params = request.query;
+//     //   console.log('params', params);
+//     // The object properties of params are named based on the "name" attributes
+//     // for the inputs of the form.
+//     const fullName = params.fullName;
+//     const favoriteColor = params.favoriteColor;
+//     const favoriteDay = params.favoriteDay;
+//     const message = params.message;
 
-    response.locals.fullName = fullName;
+//     response.locals.fullName = fullName;
 
-    response.render('thankYou', {
-        favoriteDay: favoriteDay,
-        favoriteColor: favoriteColor,
-        message: message,
-    });
-});
+//     response.render('thankYou', {
+//         favoriteDay: favoriteDay,
+//         favoriteColor: favoriteColor,
+//         message: message,
+//     });
+// });
 
 router.post('/sign_in', (req, res) => {
     const params = req.body;

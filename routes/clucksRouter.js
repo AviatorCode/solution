@@ -3,6 +3,10 @@ const knex = require('../db/client'); // This allows us to interact with the dat
 
 const router = express.Router();
 
+//const clucksRouter = require('.routes/clucksRouter');
+//app.use('/clucks', clucksRouter);
+
+
 // This postsRouter does not mean that all routes using the HTTP VERB: POST
 // need to be within this router
 // The name of this router comes from the table name within our database called
@@ -14,22 +18,22 @@ const router = express.Router();
 router.get('/new', (req, res) => {
     // This will render the new.ejs file located within the posts
     // directory of the views directory
-    res.render('posts/new');
+    res.render('clucks/new');
 });
 
 // NAME: posts#create, METHOD: POST, PATH: /posts
 router.post('/', (req, res) => {
     const formData = req.body;
-    knex('posts')
+    knex('clucks')
         .insert({
             title: formData.title,
             content: formData.content,
-            imageUrl: formData.imageUrl,
+            imageUrl: formData.image_url,
         })
         .returning('*')
-        .then(posts => {
+        .then(clucks => {
             // This is called "destructuring" the array
-            const [post /*, post2 */] = posts;
+            const [cluck /*, post2 */] = clucks;
             // const post = posts[0];
             // const post2 = posts[1];
 
@@ -39,18 +43,18 @@ router.post('/', (req, res) => {
             // updating something, reading something, etc from our db
             // We need to use that terminating method
             // within the callback to `.then`
-            res.redirect(`/posts/${post.id}`);
+            res.redirect(`/clucks/${cluck.id}`);
         });
 });
 
 // NAME: posts#index, METHOD: GET, PATH: /posts
 router.get('/', (req, res) => {
     // knex.select('*').from('posts').then(...) <- this works too, or we can just use the line below
-    knex('posts')
-        .orderBy('createdAt', 'desc')
-        .then(posts => {
+    knex('clucks')
+        .orderBy('created_at', 'desc')
+        .then(clucks => {
             // notice the res.render is within the callback to `.then`
-            res.render('posts/index', { posts: posts });
+            res.render('clucks/index', { clucks: clucks });
         });
 });
 
@@ -67,7 +71,7 @@ router.get('/:id', (req, res) => {
     // route /posts/:id/:name/:job the route then accessed was: /posts/100/Bob/developer
     // req.params === { id: "100", name: "Bob", job: "developer" }
     const id = req.params.id;
-    knex('posts')
+    knex('clucks')
         .where('id', id)
         .first()
         // first is a Knex method that works with SELECT queries
@@ -75,48 +79,48 @@ router.get('/:id', (req, res) => {
         // that matched the where clause
         // Without `first` the result returned from the query will always be an
         // array of values, even if we know that it is returning only a single value
-        .then(post => {
+        .then(cluck => {
             // res.send(post);
             // If there is a post with that id, we will show it, otherwise
             // we will redirect the user to the list of all posts
-            if (post) {
-                res.render('posts/show', { post: post });
+            if (cluck) {
+                res.render('clucks/show', { cluck: cluck });
             } else {
-                res.redirect('/posts');
+                res.redirect('/clucks');
             }
         });
 });
 
 // NAME: posts#destroy, METHOD: DELETE, PATH: /posts/:id
 router.delete('/:id', (req, res) => {
-    knex('posts')
+    knex('clucks')
         .where('id', req.params.id)
         .del()
         .then(() => {
-            res.redirect('/posts');
+            res.redirect('/clucks');
         });
 });
 
 // NAME: posts#edit, METHOD: GET, PATH: /posts/:id/edit
 router.get('/:id/edit', (req, res) => {
-    knex('posts')
+    knex('clucks')
         .where('id', req.params.id)
         .first()
-        .then(post => {
-            res.render('posts/edit', { post: post });
+        .then(clucks => {
+            res.render('clucks/edit', { cluck: cluck });
         });
 });
 
 // Name: posts#update, METHOD: PATCH, PATH: /posts/:id
 router.patch('/:id', (req, res) => {
-    const updatedPost = {
+    const updatedcluck = {
         title: req.body.title,
         content: req.body.content,
-        imageUrl: req.body.imageUrl,
+        image_url: req.body.image_url,
     };
-    knex('posts')
+    knex('clucks')
         .where('id', req.params.id)
-        .update(updatedPost)
+        .update(updatedcluck)
         .then(() => {
             res.redirect(`/posts/${req.params.id}`);
         });

@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const methodOverride = require('method-override');
 
+
+
+
 // calling the function returns to us our app
 // This app will become our server
 const app = express();
@@ -114,12 +117,18 @@ app.use((request, response, next) => {
 // // within that route
 // app.use('/posts', postsRouter);
 
+//const clucksRouter = require('.routes/clucksRouter')
+//app.use('/clucks', clucksRouter)
+
 const baseRouter = require('./routes/baseRouter');
 // the baseRouter defined within and exported from `routes/baseRouter.js`
 // is being "hooked up" to our app in the line of code below
 // This says that all requests with any HTTP verb, and to any path beginning
 // with  "/" should be handled by the baseRouter
 app.use('/', baseRouter);
+
+ //const clucksRouter = require('./routes/clucksRouter');
+ //app.use('/clucks', clucksRouter);
 
 // ------------
 // RUN SERVER
